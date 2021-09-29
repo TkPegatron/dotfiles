@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+# Wrapper for coreos-installer
+if command -v podman >/dev/null; then
+    cni_exec='podman'
+elif command -v docker >/dev/null; then
+    cni_exec='docker'
+else
+    echo "Failed, please install podman compatable cni engine"
+fi
+
+"$cni_exec" run --rm \
+    --volume ${PWD}:/data -w /data \
+    quay.io/coreos/coreos-installer:release "$@"

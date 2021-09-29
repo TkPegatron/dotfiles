@@ -1,0 +1,97 @@
+format = """
+[┌───>](bold green)$username$hostname[<────────────>](bold green) \
+$shlvl$kubernetes\
+$directory$vcsh$git_branch$git_commit\
+$git_state$git_metrics$git_status$helm\
+$lua$nodejs$python$terraform\
+$vlang$vagrant$nix_shell$conda\
+$memory_usage$aws$gcloud$openstack\
+$env_var$cmd_duration$jobs$battery\
+$time$status$shell
+[└─$character](bold green)"""
+
+add_newline = false
+
+[username]
+format = "[$user]($style)"
+show_always = true
+
+[hostname]
+format = "[$hostname]($style)"
+ssh_only = false
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+[aws]
+symbol = "  "
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[directory]
+read_only = " "
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[package]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[shlvl]
+symbol = " "
+
+[swift]
+symbol = "ﯣ "
