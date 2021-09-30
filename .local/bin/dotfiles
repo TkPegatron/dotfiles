@@ -1,0 +1,42 @@
+#!/usr/bin/bash
+# Wrapper around git to install/update dotfiles as a bare repository
+if [[ -d "$HOME/../.git" ]]
+    echo "You are in the main working tree, running this would destroy the repo."
+    exit 1
+fi
+
+function _git {
+    git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" $@
+}
+
+DOTREPO_URL = "${DOTREPO_URL}"
+
+case $1 in
+    install|update|pull)
+        if [[ -d "$HOME/.dotfiles" ]]; then
+            { # Update the user's dotfile repository locally
+                _git pull origin master
+            }
+        else
+            echo "Installing dotfiles in your homedirectory"
+            echo "Conflicting files will be moved to $HOME/.conflicting-dotfiles/" #? Move this where files are being moved
+            git clone "$DOTREPO_URL" --depth 1 --bare "$HOME/.dotfiles"
+            { # Preserve Conflicting Files
+                mkdir -pv "$HOME/.conflicting-dotfiles/"
+                _git checkout HEAD -- home
+                if [ $? = 0 ]; then
+                    echo "Dotfiles checked out succesfully"
+                else
+                    echo "Backing up pre-existing dot files.";
+                    _git checkout HEAD -- home 2>&1 | egrep "\s+\." \
+                      | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+                fi
+            }
+            _git checkout HEAD -- home
+            _git config --local status.showUntrackedFiles no
+        fi
+    ;;
+    *)
+        _git $@
+    ;;
+esac

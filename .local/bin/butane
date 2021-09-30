@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+# An inteligent wrapper around FCOS: Butane
 
 if command -v podman >/dev/null; then
     cni_exec='podman'

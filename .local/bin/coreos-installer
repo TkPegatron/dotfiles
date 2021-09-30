@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-# Wrapper for coreos-installer
+# An inteligent wrapper around FCOS: coreos-installer
 if command -v podman >/dev/null; then
     cni_exec='podman'
 elif command -v docker >/dev/null; then
