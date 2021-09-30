@@ -16,3 +16,8 @@ fi
 
 bindkey '^H' backward-kill-word
 bindkey '^[[3;5~' kill-word
+
+# Use "cbt" capability ("back_tab", as per `man terminfo`), if we have it:
+if tput cbt &> /dev/null; then
+  bindkey "$(tput cbt)" reverse-menu-complete # make Shift-tab go to previous completion
+fi

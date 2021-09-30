@@ -19,4 +19,16 @@ alias \
     dnf="sudo dnf" \
     apt="sudo apt" \
     firewall='sudo firewall-cmd' \
-    fw='firewall' \
+    fw='firewall'
+
+alias man="colored"
+alias cat="ccat"
+
+alias ....='cd ../..'
+alias word='shuf -n1 /usr/share/dict/words'
+
+#
+# Suffix aliases
+# (eg. "foo.md" to open Markdown files in glow)
+#
+alias -s md=glow
