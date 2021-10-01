@@ -15,3 +15,13 @@ export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'
 # X = suppress alternate screen
 # -#.25 = scroll horizontally by quarter of screen width (default is half)
 export LESS="-iFMRX -#.25"
+
+if [[ -z "$XDG_CONFIG_HOME" ]]
+then
+        export XDG_CONFIG_HOME="$HOME/.config"
+fi
+
+if [[ -d "$XDG_CONFIG_HOME/zsh" ]]
+then
+        export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+fi

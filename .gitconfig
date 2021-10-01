@@ -23,4 +23,4 @@
   stat = status
   st = status
 [credential]
-	helper = "!f() { /workspace/home/.vscode-server/bin/7f6ab5485bbc008386c4386d08766667e155244e/node /tmp/vscode-remote-containers-7ed419f6693548c86f5170bd06cbdd8941f2b4f3.js $*; }; f"
+	helper = "!f() { /workspace/home/.vscode-server/bin/7f6ab5485bbc008386c4386d08766667e155244e/node /tmp/vscode-remote-containers-73f64a2cf6fd175746fedb1214104b6fce8febab.js $*; }; f"

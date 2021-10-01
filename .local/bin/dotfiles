@@ -1,42 +1,58 @@
 #!/usr/bin/bash
 # Wrapper around git to install/update dotfiles as a bare repository
-if [[ -d "$HOME/../.git" ]]
-    echo "You are in the main working tree, running this would destroy the repo."
-    exit 1
-fi
 
 function _git {
     git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" $@
 }
 
-DOTREPO_URL = "${DOTREPO_URL}"
+function _help {
+    echo "This script is a wrapper around git to assist in managing a bare dotfiles repo"
+    echo ""
+    echo " install || update || pull                Will install the repository and dotfiles in $HOME"
+    echo " *                                        Will wrap git commands to operate on the $HOME/.dotfiles repository"
+    echo ""
+    echo "This command requires the environment variable DOTREPO_URL to be set prior to execution"
+}
+
+if [[ -d "$HOME/../.git" ]]; then
+    _help
+    printf "\n\nYou are in the editor's working tree, running this would destroy the repo.\n"
+    exit 1
+fi
+
+if [[ -z "$DOTREPO_URL" ]]; then
+    _help
+    printf "\n\nThe environment does not have \$DOTREPO_URL set.\n"
+fi
 
 case $1 in
     install|update|pull)
         if [[ -d "$HOME/.dotfiles" ]]; then
             { # Update the user's dotfile repository locally
-                _git pull origin master
+                _git pull origin main
             }
         else
             echo "Installing dotfiles in your homedirectory"
             echo "Conflicting files will be moved to $HOME/.conflicting-dotfiles/" #? Move this where files are being moved
             git clone "$DOTREPO_URL" --depth 1 --bare "$HOME/.dotfiles"
-            { # Preserve Conflicting Files
-                mkdir -pv "$HOME/.conflicting-dotfiles/"
-                _git checkout HEAD -- home
-                if [ $? = 0 ]; then
-                    echo "Dotfiles checked out succesfully"
-                else
-                    echo "Backing up pre-existing dot files.";
-                    _git checkout HEAD -- home 2>&1 | egrep "\s+\." \
-                      | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
-                fi
-            }
-            _git checkout HEAD -- home
-            _git config --local status.showUntrackedFiles no
         fi
+        # Preserve Conflicting Files
+        mkdir -pv "$HOME/.conflicting-dotfiles/"
+        _git checkout HEAD -- home/*
+        if [ $? = 0 ]; then
+            echo "Dotfiles checked out succesfully"
+        else
+            echo "Backing up pre-existing dot files.";
+            _git checkout HEAD -- home/ 2>&1 | egrep "\s+\." \
+              | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+        fi
+        _git checkout HEAD -- home/*
+        _git config --local status.showUntrackedFiles no
     ;;
-    *)
-        _git $@
+    status)
+        _git status
     ;;
+    help)
+        _help
+        exit 0
 esac
