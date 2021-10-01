@@ -21,10 +21,6 @@ fi
 ZSH_THEME="gentoo"
 ZSH_COLORIZE_STYLE="colorful"
 
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_PROMPT_SEPARATE_LINE=false
-SPACESHIP_EXEC_TIME_SHOW=false
-
 
 # Define Plugins
 plugins=(
@@ -48,4 +44,4 @@ if command -v kubectl >/dev/null; then plugins+=(kubectl); fi
 if command -v helm >/dev/null; then plugins+=(helm); fi
 if command -v namap >/dev/null; then plugins+=(nmap); fi
 
-source $ZSH/oh-my-zsh.sh
+#source $ZSH/oh-my-zsh.sh
