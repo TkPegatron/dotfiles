@@ -38,15 +38,15 @@ case $1 in
         fi
         # Preserve Conflicting Files
         mkdir -pv "$HOME/.conflicting-dotfiles/"
-        _git checkout HEAD -- home/*
+        _git checkout main
         if [ $? = 0 ]; then
             echo "Dotfiles checked out succesfully"
         else
             echo "Backing up pre-existing dot files.";
-            _git checkout HEAD -- home/ 2>&1 | egrep "\s+\." \
+            _git checkout main 2>&1 | egrep "\s+\." \
               | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
         fi
-        _git checkout HEAD -- home/*
+        _git checkout main
         _git config --local status.showUntrackedFiles no
     ;;
     status)
