@@ -43,8 +43,10 @@ case $1 in
             echo "Dotfiles checked out succesfully"
         else
             echo "Backing up pre-existing dot files.";
+            DATE="$(date --iso-8601)"
             _git checkout main 2>&1 | egrep "\s+\." \
-              | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+              | awk {'print $1'} | xargs -I{} tar -rf "$HOME/.dotfiles-backup.$DATE.tar" {}
+            gzip "$HOME/.dotfiles-backup.$DATE.tar"
         fi
         _git checkout main
         _git config --local status.showUntrackedFiles no
