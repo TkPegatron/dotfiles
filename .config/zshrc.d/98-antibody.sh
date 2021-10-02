@@ -3,10 +3,10 @@ if [[ ! -f "$HOME/.local/bin/antibody" ]]; then
 fi
 
 antibody bundle << PLUGINEOF > ~/.config/zsh_plugins.sh
+zsh-users/zsh-completions
 zsh-users/zsh-history-substring-search
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions 
-zsh-users/zsh-completions
 greymd/docker-zsh-completion
 jeanpantoja/dotpyvenv
 ohmyzsh/ohmyzsh path:plugins/colorize
@@ -20,4 +20,4 @@ PLUGINEOF
 
 ZSH_COLORIZE_STYLE="colorful"
 
-source ~/.config/zsh_plugins.sh
+#source ~/.config/zsh_plugins.sh

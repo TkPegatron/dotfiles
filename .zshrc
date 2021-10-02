@@ -6,8 +6,7 @@ for FN in $HOME/.config/zshrc.d/*.sh ; do
   source "$FN"
 done
 
-
-autoload -U compinit && compinit -u
+autoload -U +X compinit && compinit
 
 HYPHEN_INSENSITIVE="true"
 DISABLE_UPDATE_PROMPT="true"
