@@ -52,6 +52,8 @@ case $1 in
         fi
         _git checkout main
         _git config --local status.showUntrackedFiles no
+        _git submodule init
+        _git submodule update
     ;;
     status)
         _git status
@@ -59,4 +61,8 @@ case $1 in
     help)
         _help
         exit 0
+    ;;
+    *)
+        _git $@
+    ;;
 esac
