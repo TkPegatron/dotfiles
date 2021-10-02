@@ -1,8 +1,8 @@
-if [[ ! -f /usr/local/bin/antibody ]] || [[ ! -f "$HOME/.local/bin/antibody" ]]; then
-    curl -sfL git.io/antibody | sh -s - -b "$HOME/.local/bin/"
+if [[ ! -f "$HOME/.local/bin/antibody" ]]; then
+    curl -sfL git.io/antibody | sh -s - -b "$HOME/.local/bin"
 fi
 
-antibody bundle << PLUGINEOF > ~/.zsh_plugins.sh
+antibody bundle << PLUGINEOF > ~/.config/zsh_plugins.sh
 zsh-users/zsh-history-substring-search
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions 
@@ -20,4 +20,4 @@ PLUGINEOF
 
 ZSH_COLORIZE_STYLE="colorful"
 
-source ~/.zsh_plugins.sh
+source ~/.config/zsh_plugins.sh
