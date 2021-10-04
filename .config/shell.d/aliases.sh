@@ -21,8 +21,9 @@ alias \
     firewall='sudo firewall-cmd' \
     fw='firewall'
 
-alias man="colored"
-alias cat="ccat"
+if command -v pygmentize >/dev/null; then
+	alias cat="pygmentize"
+fi
 
 alias ....='cd ../..'
 alias word='shuf -n1 /usr/share/dict/words'

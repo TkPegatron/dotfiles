@@ -21,3 +21,10 @@ bindkey '^[[3;5~' kill-word
 if tput cbt &> /dev/null; then
   bindkey "$(tput cbt)" reverse-menu-complete # make Shift-tab go to previous completion
 fi
+
+# ctrl+<- | ctrl+->
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+# alt+<- | alt+->
+bindkey "^[[1;3C" forward-word 
+bindkey "^[[1;3D" backward-word

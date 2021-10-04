@@ -44,4 +44,4 @@ if command -v kubectl >/dev/null; then plugins+=(kubectl); fi
 if command -v helm >/dev/null; then plugins+=(helm); fi
 if command -v namap >/dev/null; then plugins+=(nmap); fi
 
-#source $ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh
