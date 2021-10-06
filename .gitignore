@@ -3,7 +3,7 @@
 .local/share/nvim/site/autoload/plug.vim
 .local/bin/antibody
 .local/bin/starship
-.zcompdump
+.zcompdump***
 .zhistory
 .gnupg/trustdb.gpg
 .gnupg/pubring.kbx

@@ -6,6 +6,7 @@ if command -v nvim >/dev/null; then
     fi
 
     alias vim="nvim"
+    alias vi="nvim"
     alias vimdiff="nvim -d"
     
     export EDITOR=nvim
