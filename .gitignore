@@ -12,3 +12,4 @@
 .gnupg/S.gpg-agent
 .vscode-server
 .config/mpd/pid
+.config/zsh/history
