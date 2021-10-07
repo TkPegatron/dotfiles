@@ -1,0 +1,52 @@
+#!/usr/bin/env sh
+source "$HOME/.profile"
+#      ALIASES
+#================================
+alias \
+    ka="killall" \
+	mkdir="mkdir -pv" \
+	mpv="mpv --input-ipc-server=/tmp/mpvsoc$(date +%s)" \
+	ls="ls -hN --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	yt="youtube-dl --add-metadata -i -o '%(upload_date)s-%(title)s.%(ext)s'" \
+	yta="yt -x -f bestaudio/best" \
+	cp="cp --reflink=auto"
+
+# keystroke Savers
+alias \
+    pacman="sudo pacman" \
+    dnf="sudo dnf" \
+    apt="sudo apt" \
+    firewall='sudo firewall-cmd' \
+    fw='firewall'
+
+alias word='shuf -n1 /usr/share/dict/words'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+#      FUNCTIONS
+#================================
+
+mcd() {mkdir -pv $1; cd $1 ;}
+cisco-tty() {sudo screen /dev/ttyUSB0 9600}
+unifi-tty() {sudo screen /dev/ttyUSB0 115200}
+
+lock() {
+  loginctl lock-session 1
+  xset -display :0 dpms force off
+}
+
+unlock() {
+  loginctl unlock-session 1
+  xset -display :0 dpms force on
+}
+
+man() {
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    # LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    command man "$@"
+}

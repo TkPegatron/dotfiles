@@ -1,11 +1,14 @@
 .oh-my-zsh/
+.config/zsh/omz
 .ssh/known_hosts
 .local/share/nvim/site/autoload/plug.vim
 .local/bin/antibody
 .local/bin/starship
 .zcompdump***
 .zhistory
+.cache
 .gnupg/trustdb.gpg
 .gnupg/pubring.kbx
 .gnupg/S.gpg-agent
 .vscode-server
+.config/mpd/pid
