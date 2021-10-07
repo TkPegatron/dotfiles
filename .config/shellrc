@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 source "$HOME/.profile"
+
 #      ALIASES
 #================================
 alias \
@@ -24,12 +25,16 @@ alias \
 alias word='shuf -n1 /usr/share/dict/words'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
+
 #      FUNCTIONS
 #================================
 
 mcd() {mkdir -pv $1; cd $1 ;}
 cisco-tty() {sudo screen /dev/ttyUSB0 9600}
 unifi-tty() {sudo screen /dev/ttyUSB0 115200}
+
+
+
 
 lock() {
   loginctl lock-session 1
@@ -50,3 +55,13 @@ man() {
     LESS_TERMCAP_us=$'\e[01;32m' \
     command man "$@"
 }
+
+#  BAT Related
+#==================
+if command -v bat > /dev/null; then
+  alias cat='bat -Pp'
+  
+  batdiff() {
+      git diff --name-only --diff-filter=d | xargs bat --diff
+  }
+fi
