@@ -1,9 +1,3 @@
 [submodule ".config/ranger/plugins/ranger-devicons2"]
 	path = .config/ranger/plugins/ranger-devicons2
 	url = https://github.com/cdump/ranger-devicons2
-[submodule ".config/bat/syntaxes/network_tech"]
-	path = .config/bat/syntaxes/network_tech
-	url = https://github.com/heyglen/network_tech.git
-[submodule ".config/bat/syntaxes/Ansible"]
-	path = .config/bat/syntaxes/Ansible
-	url = https://github.com/clifford-github/sublime-ansible.git

@@ -2,5 +2,4 @@
 --italic-text="always"
 --map-syntax='.ignore:Git Ignore'
 --map-syntax='.stignore:Git Ignore'
---map-syntax='.asa:Cisco ASA'
---map-syntax='.ios:Cisco IOS'
+--map-syntax='**/.ssh/config.d/**:SSH Config'
