@@ -13,3 +13,4 @@
 .vscode-server
 .config/mpd/pid
 .config/zsh/history
+.ssh/authorized_keys
