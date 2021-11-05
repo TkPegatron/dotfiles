@@ -8,21 +8,6 @@ HISTSIZE=1000
 SAVEHIST=1000
 WORDCHARS=${WORDCHARS//\/[&.;]}
 
-#       SHELL HOOKS
-#=====================================
-
-autoload -U add-zsh-hook
-
-function -auto-ls-after-cd() {
-  emulate -L zsh
-  # Only in response to a user-initiated `cd`, not indirectly (eg. via another
-  # function).
-  if [ "$ZSH_EVAL_CONTEXT" = "toplevel:shfunc" ]; then
-    command -v exa > /dev/null && exa --icons --group-directories-first || ls
-  fi
-}
-add-zsh-hook chpwd -auto-ls-after-cd
-
 #       SETUP COMPLETION
 #=====================================
 
@@ -105,14 +90,3 @@ if command -v namap >/dev/null; then plugins+=(nmap); fi
 
 source $ZSH/oh-my-zsh.sh
 
-#       STARSHIP PROMPT
-#=====================================
-
-if command -v starship >/dev/null; then
-    eval "$(starship init zsh)"
-else
-    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- \
-      --bin-dir "$HOME/.local/bin" \
-      --yes \
-    && eval "$(starship init zsh)"
-fi

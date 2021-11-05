@@ -1,5 +1,0 @@
---theme="TwoDark"
---italic-text="always"
---map-syntax='.ignore:Git Ignore'
---map-syntax='.stignore:Git Ignore'
---map-syntax='**/.ssh/config.d/**:SSH Config'
