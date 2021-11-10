@@ -25,12 +25,22 @@ alias \
 alias word='shuf -n1 /usr/share/dict/words'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
+alias mtr='mtr -n -o "LSRDNBAW"'
+
 
 #      FUNCTIONS
 #================================
 
 mcd() {mkdir -pv $1; cd $1 ;}
-cisco-tty() {sudo screen /dev/ttyUSB0 9600}
+
+cisco-tty() {
+  if [[ -z $1 ]]; then
+    sudo screen /dev/ttyUSB0 9600
+  else
+    sudo screen /dev/ttyUSB${1} 9600
+  fi
+}
+
 unifi-tty() {sudo screen /dev/ttyUSB0 115200}
 
 
@@ -65,3 +75,4 @@ if command -v bat > /dev/null; then
       git diff --name-only --diff-filter=d | xargs bat --diff
   }
 fi
+
