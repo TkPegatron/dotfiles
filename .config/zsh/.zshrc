@@ -53,6 +53,9 @@ zstyle ':completion:*' list-colors ''
 # - Substring complete (ie. bar -> foobar).
 zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
+# Prevent automatically adding escape characters to pasted URLs
+zstyle ':urlglobber' url-other-schema
+
 #       PLUGIN INIT
 #=====================================
 
@@ -86,7 +89,6 @@ plugins=(
   zsh-completions
   zsh-syntax-highlighting
   history-substring-search
-  command-not-found
   colored-man-pages
   colorize
   systemd
@@ -101,7 +103,7 @@ if command -v docker >/dev/null; then plugins+=(docker); fi
 if command -v mosh >/dev/null; then plugins+=(mosh); fi
 if command -v kubectl >/dev/null; then plugins+=(kubectl); fi
 if command -v helm >/dev/null; then plugins+=(helm); fi
-if command -v namap >/dev/null; then plugins+=(nmap); fi
+if command -v nmap >/dev/null; then plugins+=(nmap); fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -110,9 +112,9 @@ source $ZSH/oh-my-zsh.sh
 
 if command -v starship >/dev/null; then
     eval "$(starship init zsh)"
-else
-    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- \
-      --bin-dir "$HOME/.local/bin" \
-      --yes \
-    && eval "$(starship init zsh)"
+#else
+#    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- \
+#      --bin-dir "$HOME/.local/bin" \
+#      --yes \
+#    && eval "$(starship init zsh)"
 fi
