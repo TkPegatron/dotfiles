@@ -112,7 +112,7 @@ source $ZSH/oh-my-zsh.sh
 
 if command -v starship >/dev/null; then
     eval "$(starship init zsh)"
-#else
+#else #! Move this code to the installation script
 #    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- \
 #      --bin-dir "$HOME/.local/bin" \
 #      --yes \

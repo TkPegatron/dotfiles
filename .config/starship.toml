@@ -9,8 +9,11 @@ add_newline = false
 [username]
 format = "[$user]($style)@"
 
+[hostname]
+format = "[$hostname]($style)"
+
 [cmd_duration]
-format = '\[[⏱ $duration ]($style)\]'
+format = '\[[ $duration ]($style)\]'
 
 [character]
 success_symbol = "❯"
@@ -95,15 +98,6 @@ disabled = false
 [swift]
 symbol = "ﯣ "
 
-[custom.ansible]
-description = "Ansible version"
-command = "echo -n $(ansible --version 2>/dev/null | grep ^ansible | awk '{ print $2 }') $(which ansible | sed -e s@$HOME/@@ -e s@/bin/ansible@@ -e s@/.virtual_env@@)"
-when = """ test -n "${ANSIBLE_HOME}" """
-files = [ "ansible.cfg" ]
-shell = "/bin/bash"
-symbol = "Ⓐ "
-format = "[$symbol$output]($style) "
-
 [custom.system_icons]
 description = "Show system icons"
 command     = '([ $(uname -s) == "Darwin" ] && echo ) || ([ $(uname -s) == "Linux" ] && echo )'
@@ -111,9 +105,3 @@ format      = "[$output]($style) "
 style       = "bold"
 shell       = ["bash", "--noprofile", "--norc"]
 when        = "true"
-
-[custom.git_email]
-command = "git config user.email"
-when = "git rev-parse --git-dir 2> /dev/null"
-format = "by [$output]($style) "
-style = "bright-yellow bold"

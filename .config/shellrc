@@ -24,7 +24,7 @@ alias \
 
 alias word='shuf -n1 /usr/share/dict/words'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
+_dotfiles () {_git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME} #! Prep for moving into a script
 alias mtr='mtr -n -o "LSRDNBAW"'
 
 
@@ -32,6 +32,8 @@ alias mtr='mtr -n -o "LSRDNBAW"'
 #================================
 
 mcd() {mkdir -pv $1; cd $1 ;}
+
+# ---[ Consolecable functions ]--------------------------------------------- #
 
 cisco-tty() {
   if [[ -z $1 ]]; then
@@ -43,8 +45,7 @@ cisco-tty() {
 
 unifi-tty() {sudo screen /dev/ttyUSB0 115200}
 
-
-
+# ---[ Loginctl ]----------------------------------------------------------- #
 
 lock() {
   loginctl lock-session 1
@@ -56,23 +57,21 @@ unlock() {
   xset -display :0 dpms force on
 }
 
-man() {
-    LESS_TERMCAP_md=$'\e[01;31m' \
-    LESS_TERMCAP_me=$'\e[0m' \
-    LESS_TERMCAP_se=$'\e[0m' \
-    # LESS_TERMCAP_so=$'\e[01;44;33m' \
-    LESS_TERMCAP_ue=$'\e[0m' \
-    LESS_TERMCAP_us=$'\e[01;32m' \
-    command man "$@"
-}
+# ---[ Replace cat(1) with bat if available]-------------------------------- #
 
-#  BAT Related
-#==================
 if command -v bat > /dev/null; then
+
   alias cat='bat -Pp'
-  
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"  
+
   batdiff() {
-      git diff --name-only --diff-filter=d | xargs bat --diff
+      git diff &>/dev/null
+      if [[ "$?" == "0" ]] && [[ -z "$1" ]]; then
+        # Pass the output of git diff to bat
+        git diff --name-only --diff-filter=d | xargs bat --diff
+      else
+        # pass the output of diff to bat
+        diff -u "$1" "$2" | bat -p
+      fi
   }
 fi
-

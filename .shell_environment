@@ -4,6 +4,7 @@ export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 # Adds `~/.local/bin` to $PATH
 #export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 
+# Use the QT Filepicker on applications that support it.
 export GTK_USE_PORTAL=1
 
 # Set the default GPG recipient
@@ -47,8 +48,6 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
    fi
    eval `cat $HOME/.ssh/ssh-agent`
 fi
-
-#=============
 
 if command -v nvim >/dev/null; then
     
