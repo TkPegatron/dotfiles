@@ -1,6 +1,4 @@
 #!/usr/bin/env sh
-source "$HOME/.profile"
-
 #      ALIASES
 #================================
 alias \

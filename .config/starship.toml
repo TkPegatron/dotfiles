@@ -92,7 +92,7 @@ symbol = " "
 [shlvl]
 symbol = "❯"
 format = "[$symbol]($style)"
-repeat = true
+repeat = false
 disabled = false
 
 [swift]
