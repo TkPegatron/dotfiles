@@ -1,0 +1,45 @@
+DOTREPO_URL="${DOTREPO_URL:-https://github.com/TkPegatron/dotfiles.git}"
+DOTREPO_BRANCH="${DOTREPO_BRANCH:-main}"
+
+function _git {
+    git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" $@
+}
+
+function _install {
+    if [[ -d "$HOME/.dotfiles" ]]; then
+        { # Update the user's dotfile repository locally
+            _git pull origin "$DOTREPO_BRANCH"
+        }
+    else
+        echo "Installing dotfiles in your home directory"
+        echo "Conflicting files will be moved to $HOME/.conflicting-dotfiles/" #? Move this where files are being moved
+        git clone "$DOTREPO_URL" --depth 1 --bare "$HOME/.dotfiles"
+    fi
+    # Preserve Conflicting Files
+    mkdir -pv "$HOME/.conflicting-dotfiles/"
+    _git checkout "$DOTREPO_BRANCH"
+    if [ $? = 0 ]; then
+        echo "Dotfiles checked out succesfully"
+    else
+        echo "Backing up pre-existing dot files.";
+        DATE="$(date --iso-8601)"
+        for i in `_git checkout "$DOTREPO_BRANCH" 2>&1 | egrep "\s+\." | awk {'print $1'}`; do 
+           tar -vrf "$HOME/.dotfiles-backup.$DATE.tar" "$i" && rm -vr "$i"
+        done
+        gzip "$HOME/.dotfiles-backup.$DATE.tar"
+        rm "$HOME/.dotfiles-backup.$DATE.tar"
+        _git checkout "$DOTREPO_BRANCH"
+    fi
+    _git config --local status.showUntrackedFiles no
+    _git submodule init
+    _git submodule update
+}
+
+case $1 in
+    install|update|pull)
+        _install
+        ;;
+    *)
+        _git $@
+        ;;
+esac

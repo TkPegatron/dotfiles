@@ -21,8 +21,6 @@ alias \
     fw='firewall'
 
 alias word='shuf -n1 /usr/share/dict/words'
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-_dotfiles () {_git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME} #! Prep for moving into a script
 alias mtr='mtr -n -o "LSRDNBAW"'
 
 
