@@ -1,0 +1,94 @@
+format = """
+[╭{](bright-blue) ${custom.system_icons}$username$hostname:$directory[}==\\(](bright-blue)$git_branch$git_state$git_status$git_commit$python$ruby$rust$terraform[\\)](bright-blue)
+[╰─\\[](bright-blue)$time[\\]─{](bright-blue)[:](bright-yellow) 
+"""
+
+add_newline = false
+
+[fill]
+symbol = " "
+
+[username]
+format = "[$user](yellow)[@](blue)"
+show_always = true
+
+[hostname]
+format = "[$ssh_symbol$hostname]($style)"
+ssh_symbol = "🌐 "
+ssh_only = false
+
+[time]
+format = '[$time](dimmed bright-red)'
+utc_time_offset = "-4"
+time_format = "%T"
+disabled = false
+time_range = "-"
+
+[directory]
+read_only = ""
+truncation_symbol = "…/"
+truncate_to_repo = false
+truncation_length = 100
+
+[terraform]
+format = "[$symbol$workspace]($style) "
+
+[git_branch]
+symbol = " "
+format = " [$symbol$branch]($style) "
+
+[golang]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+format = '[$symbol$state( \($name\))]($style) '
+
+[package]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[ruby]
+symbol = " "
+format = "[$symbol($version )]($style)"
+
+[rust]
+symbol = " "
+format = "[$symbol($version )]($style)"
+
+
+[swift]
+symbol = "ﯣ "
+
+[custom.system_icons]
+description = "Show system icons"
+command     = 'echo $STARSHIP_OS_ICON'
+#command     = '([ $(uname -s) == "Darwin" ] && echo ) || ([ $(uname -s) == "Linux" ] && echo )'
+format      = "[$output]($style) "
+style       = "bold bright-yellow"
+shell       = ["bash", "--noprofile", "--norc"]
+when        = "true"

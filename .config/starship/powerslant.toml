@@ -1,0 +1,28 @@
+format = """
+[ ](fg:#FFFFFF bg:#4E4E4E)\
+$directory\
+[◤](fg:#4E4E4E bg:#009966)\
+$git_branch\
+[◤](fg:#009966)
+$time\
+[◤ ](fg:#4E4E4E)
+"""
+
+[directory]
+style = "bg:#4E4E4E fg:#FFFFFF"
+format = "[ $path ]($style)"
+truncation_length = 0
+truncation_symbol = " "
+
+[git_branch]
+symbol = ""
+style = "bg:#009966 fg:#FFFFFF"
+format = '[ $symbol $branch ]($style)'
+
+[time]
+style = "fg:#FFFFFF bg:#4E4E4E"
+disabled = false
+format = '[ $time ]($style)'
+time_format = "%T"
+utc_time_offset = "-5"
+# time_range = "10:00:00-14:00:00"

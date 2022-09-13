@@ -1,0 +1,48 @@
+format = """
+[╭{](blue) [λ](bold bright-yellow) $username$hostname:$directory[}==\\(](blue)$git_branch$git_state$git_status$git_commit$python$ruby$rust$terraform[\\)](blue)
+[╰─\\[](blue)$time[\\]─{](blue)[:](bright-yellow) 
+"""
+
+add_newline = false
+
+[fill]
+symbol = " "
+
+[username]
+format = "[$user]($style)[@](blue)"
+style_root = "bold red"
+style_user = "bold yellow"
+show_always = true
+disabled = false
+
+[hostname]
+format = "[$hostname]($style)"
+ssh_only = false
+
+[time]
+format = '[$time](dimmed bright-red)'
+utc_time_offset = "-4"
+time_format = "%T"
+disabled = false
+time_range = "-"
+
+[directory]
+read_only = " ro"
+truncation_symbol = "…/"
+truncate_to_repo = false
+truncation_length = 100
+
+[terraform]
+format = "[$symbol$workspace]($style) "
+
+[git_branch]
+symbol = " vcs: "
+format = "[$symbol$branch]($style) "
+
+[python]
+symbol = "py: "
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[rust]
+symbol = "rs: "
+format = "[$symbol($version )]($style)"

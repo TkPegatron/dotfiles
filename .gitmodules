@@ -1,6 +1,0 @@
-[submodule ".config/ranger/plugins/ranger-devicons2"]
-	path = .config/ranger/plugins/ranger-devicons2
-	url = https://github.com/cdump/ranger-devicons2
-[submodule ".config/tmux/plugins/tmux-yank"]
-	path = .config/tmux/plugins/tmux-yank
-	url = https://github.com/tmux-plugins/tmux-yank

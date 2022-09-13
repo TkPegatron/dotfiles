@@ -1,120 +1,130 @@
-source $ZDOTDIR/options
-source $ZDOTDIR/keybinds
-#source $HOME/.profile
-source $HOME/.config/shellrc
+# Z-Shell Setopt
 
-HISTFILE="$ZDOTDIR/history"
-HISTSIZE=1000
-SAVEHIST=1000
-WORDCHARS=${WORDCHARS//\/[&.;]}
+setopt no_beep                            # Disable the shell from triggering the bell
+setopt hist_reduce_blanks                 # Reduce whitespace from commands
+setopt complete_aliases                   # Expand aliases before completion has finished
+setopt autopushd pushdminus pushdsilent   # Use pushd when cd-ing around
+setopt hist_ignore_all_dups               # Filter non-contiguous duplicates from history
+setopt no_flow_control                    # disable start (C-s) and stop (C-q) characters
+setopt rematch_pcre                       # Match regular expressions using PCRE if available
+setopt pushd_ignore_dups                  # don't push multiple copies of same dir onto stack
+setopt auto_param_slash                   # tab completing directory appends a slash
+setopt share_history                      # share history between shell processes
 
-#       SHELL HOOKS
-#=====================================
 
-autoload -U add-zsh-hook
+# - { Helper Functions } ------------------------------------------------------------------- #
+_exists() { (( $+commands[$1] )) }
 
-function -auto-ls-after-cd() {
-  emulate -L zsh
-  # Only in response to a user-initiated `cd`, not indirectly (eg. via another
-  # function).
-  if [ "$ZSH_EVAL_CONTEXT" = "toplevel:shfunc" ]; then
-    command -v exa > /dev/null && exa --icons --group-directories-first || ls
+# - { Antigen } ---------------------------------------------------------------------------- #
+typeset -a ANTIGEN_CHECK_FILES=(${ZDOTDIR:-~}/.zshrc $HOME/.local/share/zsh/antigen.zsh)
+source $HOME/.local/share/zsh/antigen.zsh
+
+# Oh-My-Zsh plugins
+antigen use oh-my-zsh
+
+antigen bundle git
+antigen bundle pip
+antigen bundle sudo
+antigen bundle python
+antigen bundle virtualenv
+
+if _exists sk; then
+  antigen bundle casonadams/skim.zsh
+elif _exists fzf; then
+  antigen bundle fzf
+else
+  true
+fi
+
+
+antigen bundle command-not-found
+
+# External Plugins
+antigen bundle chrissicool/zsh-256color
+#antigen bundle fundor333/bofh --branch=main
+antigen bundle z-shell/F-Sy-H --branch=main
+antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen-bundle Tarrasch/zsh-autoenv
+
+antigen apply
+# END:: Antigen
+
+# -- { Shell Hooks } ----------------------------------------------------------------------- #
+
+if [ x$ZSH_SELF_EXAPWD = xtrue ]; then
+  # Define a function to list directories with exa and add it as a hook
+  function -auto-ls-after-cd() {
+    emulate -L zsh
+    # Only in response to a user-initiated `cd`, not indirectly (eg. via another function).
+    if [ "$ZSH_EVAL_CONTEXT" = "toplevel:shfunc" ]; then
+      if $NERD_FONT_AVAILABLE; then command -v exa > /dev/null && exa --icons --only-dirs || ls; fi
+      if ! $NERD_FONT_AVAILABLE; then command -v exa > /dev/null && exa --only-dirs || ls; fi
+    fi
+  }
+  add-zsh-hook chpwd -auto-ls-after-cd
+fi
+
+# Initialize Starship Prompt if available
+if [[ $TERM != "dumb" && (-z $INSIDE_EMACS || $INSIDE_EMACS == "vterm") ]]; then
+  _exists starship && eval "$(starship init zsh)"
+fi
+
+# Hook direnv if available
+_exists direnv && eval "$(direnv hook zsh)"
+
+# - { Aliases } ---------------------------------------------------------------------------- #
+alias ip='ip --color=auto'
+alias mtr='mtr -n -o '\''LSRDNBAW'\'''
+
+if _exists nvim; then
+  export EDITOR='nvim'
+  export VISUAL='nvim'
+  alias vi='nvim'
+  alias vim='nvim'
+fi 
+
+### Replace ls with exa if available
+if _exists exa; then
+  if $NERD_FONT_AVAILABLE; then
+    alias ls='exa --icons'
+    alias ll='exa -l --icons'
+    alias la='exa -a --icons'
+    alias lla='exa -la --icons'
+    alias lt='exa --tree --icons'
+  else
+    alias ls='exa'
+    alias ll='exa -l'
+    alias la='exa -a'
+    alias lla='exa -la'
+    alias lt='exa --tree'
   fi
+fi
+
+### Replace cat(1) with bat if available
+if _exists bat; then
+  alias cat='bat --plain --paging=never'
+  batf() { tail -f "$1" | bat --plain --paging=never; }
+  batdiff() {
+    git diff --name-only --relative --diff-filter=d | xargs bat --diff
+  }
+  help() {
+    "$@" --help 2>&1 | bat --plain --language=help --paging=never
+  }
+fi
+
+skpreview() {
+  sk --ansi -i --preview "tui_preview.sh {}" "$@"
 }
-add-zsh-hook chpwd -auto-ls-after-cd
 
-#       SETUP COMPLETION
-#=====================================
+### Typoing sudo will still call sudo, preserving the user's path
+alias sudo='sudo env PATH=$PATH '
+alias sudu='sudo env PATH=$PATH '
+alias sodo='sudo env PATH=$PATH '
+alias sodu='sudo env PATH=$PATH '
+alias sdoo='sudo env PATH=$PATH '
+alias sduo='sudo env PATH=$PATH '
 
-autoload -U compinit
-
-zstyle ':completion:*' menu select
-zstyle ':completion:*' rehash true
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.cache/zsh
-
-typeset -A __STYLE
-
-__STYLE[ITALIC_ON]=$'\e[3m'
-__STYLE[ITALIC_OFF]=$'\e[23m'
-
-# Categorize completion suggestions with headings:
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*:descriptions' format %F{default}%B%{$__STYLE[ITALIC_ON]%}--- %d ---%{$__STYLE[ITALIC_OFF]%}%b%f
-
-# Colorize completions using default `ls` colors.
-zstyle ':completion:*' list-colors ''
-
-# Make completion:
-# - Try exact (case-sensitive) match first.
-# - Then fall back to case-insensitive.
-# - Accept abbreviations after . or _ or - (ie. f.b -> foo.bar).
-# - Substring complete (ie. bar -> foobar).
-zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-# Prevent automatically adding escape characters to pasted URLs
-zstyle ':urlglobber' url-other-schema
-
-#       PLUGIN INIT
-#=====================================
-
-export ZSH="$ZDOTDIR/omz"
-export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"
-export ZSH_CUSTOM="$ZSH/custom"
-
-# Install ohmyzsh if not present.
-if [[ ! -f "$ZSH/oh-my-zsh.sh" ]]; then
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended"
-fi
-
-if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-completions" ]]; then
-    git clone https://github.com/zsh-users/zsh-completions "$ZSH_CUSTOM/plugins/zsh-completions"
-fi
-
-if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-fi
-
-if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
-fi
-
-ZSH_THEME="gentoo"
-ZSH_COLORIZE_STYLE="colorful"
-
-
-# Define Plugins
-plugins=(
-  zsh-completions
-  zsh-syntax-highlighting
-  history-substring-search
-  colored-man-pages
-  colorize
-  systemd
-  sudo
-  git
-)
-
-if command -v rsync >/dev/null; then plugins+=(cp); fi
-if command -v fzf >/dev/null; then plugins+=(fzf); fi
-if command -v tmux >/dev/null; then plugins+=(tmux); fi
-if command -v docker >/dev/null; then plugins+=(docker); fi
-if command -v mosh >/dev/null; then plugins+=(mosh); fi
-if command -v kubectl >/dev/null; then plugins+=(kubectl); fi
-if command -v helm >/dev/null; then plugins+=(helm); fi
-if command -v nmap >/dev/null; then plugins+=(nmap); fi
-
-source $ZSH/oh-my-zsh.sh
-
-#       STARSHIP PROMPT
-#=====================================
-
-if command -v starship >/dev/null; then
-    eval "$(starship init zsh)"
-#else #! Move this code to the installation script
-#    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- \
-#      --bin-dir "$HOME/.local/bin" \
-#      --yes \
-#    && eval "$(starship init zsh)"
-fi
+# - { Keybinds } ---------------------------------------------------------------------------- #
+bindkey '^H' backward-kill-word
