@@ -1,5 +1,6 @@
-# Elliana's dotfiles
+# Elliana's HomeConfig
 
+**Installation**: This repository should be installed as a bare git repository. There is a helper alias that will wrap git to use this bare repo to interact with upstream.
 
 ## Software preferences
 

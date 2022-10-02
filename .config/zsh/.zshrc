@@ -46,7 +46,7 @@ antigen bundle z-shell/F-Sy-H --branch=main
 antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
-antigen-bundle Tarrasch/zsh-autoenv
+antigen bundle Tarrasch/zsh-autoenv
 
 antigen apply
 # END:: Antigen

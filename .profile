@@ -26,10 +26,12 @@ _postpath "$HOME/.local/bin"
 #export LC_CTYPE="en_US.UTF-8"
 
 export GNUPGHOME="$HOME/.config/gnupg"
-export MANPAGER="sh -c 'col -bx | $HOME/.local/bin/bat -l man -p'"
 export PAGER="less -FirSwX"
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 export TMUX_TMPDIR="${XDG_RUNTIME_DIR:-"/run/user/\$(id -u)"}"
+
+export MANPAGER="sh -c 'col -bx | $HOME/.local/bin/bat -l man -p'"
+export MANROFFOPT="-c"
 
 # Default editor to vi-improved
 export EDITOR="vim"
