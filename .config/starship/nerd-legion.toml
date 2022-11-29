@@ -1,12 +1,19 @@
 format = """
-[╭{](bright-blue) ${custom.system_icons}$username$hostname:$directory[}==\\(](bright-blue)$git_branch$git_state$git_status$git_commit$python$ruby$rust$terraform[\\)](bright-blue)
-[╰─\\[](bright-blue)$time[\\]─{](bright-blue)[:](bright-yellow) 
+[{](bright-blue) $container ${custom.system_icons}$username$hostname:$directory[}](bright-blue)$git_branch$git_state$git_status$git_commit$python$ruby$rust$terraform
+$character
 """
 
 add_newline = false
+scan_timeout = 10
+continuation_prompt = "[∙∙∙](bright-black) "
 
 [fill]
 symbol = " "
+
+[character]
+format = "$symbol "
+success_symbol = "[%](bright-yellow)"
+error_symbol = "[%](bright-red)"
 
 [username]
 format = "[$user](yellow)[@](blue)"
@@ -14,8 +21,12 @@ show_always = true
 
 [hostname]
 format = "[$ssh_symbol$hostname]($style)"
-ssh_symbol = "🌐 "
+ssh_symbol = "🌏 "
 ssh_only = false
+
+[container]
+format = "[$symbol]($style)"
+style = "yellow"
 
 [time]
 format = '[$time](dimmed bright-red)'

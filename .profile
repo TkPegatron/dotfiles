@@ -47,7 +47,7 @@ export NERD_FONT_AVAILABLE=true
 
 if $NERD_FONT_AVAILABLE; then
     export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/nerd-legion.toml"
-    export STARSHIP_OS_ICON=""
+    export STARSHIP_OS_ICON="⚙️"
 else
     export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/basic-legion.toml"
 fi
