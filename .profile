@@ -43,13 +43,13 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-export NERD_FONT_AVAILABLE=true
+export NERD_FONT_AVAILABLE=false
 
 if $NERD_FONT_AVAILABLE; then
-    export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/nerd-legion.toml"
+    export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/nf-legion.toml"
     export STARSHIP_OS_ICON="⚙️"
 else
-    export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/basic-legion.toml"
+    export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/bf-singleline.toml"
 fi
 
 export SKIM_DEFAULT_COMMAND="fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
