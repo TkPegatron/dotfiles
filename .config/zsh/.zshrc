@@ -128,3 +128,10 @@ alias sduo='sudo env PATH=$PATH '
 
 # - { Keybinds } ---------------------------------------------------------------------------- #
 bindkey '^H' backward-kill-word
+
+if [[ "${terminfo[kend]}" != "" ]]; then
+  bindkey "${terminfo[kend]}" end-of-line
+else
+  bindkey '^[[8~' end-of-line
+  bindkey '^[[F' end-of-line
+fi
