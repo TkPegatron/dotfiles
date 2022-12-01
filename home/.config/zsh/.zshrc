@@ -131,7 +131,8 @@ bindkey '^H' backward-kill-word
 
 if [[ "${terminfo[kend]}" != "" ]]; then
   bindkey "${terminfo[kend]}" end-of-line
-else
-  bindkey '^[[8~' end-of-line
-  bindkey '^[[F' end-of-line
+fi
+
+if [[ "${terminfo[khome]}" != "" ]]; then
+  bindkey "${terminfo[khome]}" beginning-of-line
 fi
