@@ -14,6 +14,10 @@
 .ssh/known_hosts
 .config/zsh/zsh_history
 .config/zsh/.zshrc.zwc
+.config/gnupg/*
+!.config/gnupg/dirmngr.conf
+!.config/gnupg/gpg-agent.conf
+!.config/gnupg/gpg.conf
 .bash_history
 .lesshst
 .python_history

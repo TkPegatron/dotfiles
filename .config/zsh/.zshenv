@@ -6,6 +6,8 @@ if [[ -z "$__ZSH_SESS_VARS_SOURCED" ]]; then
   
 fi
 
+export GPG_TTY="$(tty)"
+
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 
 ZSH_SELF_EXAPWD=true

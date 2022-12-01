@@ -54,8 +54,6 @@ fi
 
 export SKIM_DEFAULT_COMMAND="fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 
-# Need to find a generic equivalent
-#
-#if [[ -z "$SSH_AUTH_SOCK" ]]; then
-#  export SSH_AUTH_SOCK="$(/nix/store/14kx4hqi1ccdfp8g4s3lylaywd9xb35f-gnupg-2.3.4/bin/gpgconf --list-dirs agent-ssh-socket)"
-#fi
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
