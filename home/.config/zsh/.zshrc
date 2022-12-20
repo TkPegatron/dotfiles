@@ -127,12 +127,36 @@ alias sdoo='sudo env PATH=$PATH '
 alias sduo='sudo env PATH=$PATH '
 
 # - { Keybinds } ---------------------------------------------------------------------------- #
+bindkey -e
+#if [[ "${terminfo[khome]}" != "" ]]; then
+#  bindkey "${terminfo[khome]}" beginning-of-line
+#else
+#  bindkey '^[[7~' beginning-of-line
+#  bindkey '^[[H' beginning-of-line
+#fi
+
+#if [[ "${terminfo[kend]}" != "" ]]; then
+#  bindkey "${terminfo[kend]}" end-of-line
+#else
+#  bindkey '^[[8~' end-of-line
+#  bindkey '^[[F' end-of-line
+#fi
+
+# TEMPORARY
+bindkey '^[[F' end-of-line
+bindkey '^[[H' beginning-of-line
+
 bindkey '^H' backward-kill-word
+bindkey '^[[3;5~' kill-word
 
-if [[ "${terminfo[kend]}" != "" ]]; then
-  bindkey "${terminfo[kend]}" end-of-line
+# Use "cbt" capability ("back_tab", as per `man terminfo`), if we have it:
+if tput cbt &> /dev/null; then
+  bindkey "$(tput cbt)" reverse-menu-complete # make Shift-tab go to previous completion
 fi
 
-if [[ "${terminfo[khome]}" != "" ]]; then
-  bindkey "${terminfo[khome]}" beginning-of-line
-fi
+# ctrl+<- | ctrl+->
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+# alt+<- | alt+->
+bindkey "^[[1;3C" forward-word 
+bindkey "^[[1;3D" backward-word
