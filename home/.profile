@@ -43,9 +43,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-export NERD_FONT_AVAILABLE=false
+export SHELL_NERD_FONT_AVAILABLE=false
 
-if $NERD_FONT_AVAILABLE; then
+if $SHELL_NERD_FONT_AVAILABLE; then
     export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/nf-legion.toml"
     export STARSHIP_OS_ICON="⚙️"
 else
@@ -54,6 +54,8 @@ fi
 
 export SKIM_DEFAULT_COMMAND="fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 
+# Use GPG-Agent for SSH
+export GPG_TTY=$(tty)
 if [ -z "$SSH_AUTH_SOCK" ]; then
     export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 fi
