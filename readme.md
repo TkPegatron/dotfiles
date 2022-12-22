@@ -16,6 +16,10 @@
 - KDE: Dolphin
 - GNOME: Nemo
 
+### hccm script
+
+A little internal shell script to modify the running shell environment in a semi-sane way.
+
 ### Terminal applications and shell utils.
 
 - Glances

@@ -16,40 +16,41 @@ setopt share_history                      # share history between shell processe
 _exists() { (( $+commands[$1] )) }
 
 # - { Antigen } ---------------------------------------------------------------------------- #
-typeset -a ANTIGEN_CHECK_FILES=(${ZDOTDIR:-~}/.zshrc $HOME/.local/share/zsh/antigen.zsh)
-source $HOME/.local/share/zsh/antigen.zsh
+if [ -f "${ANTIGEN_ZSH_BIN}" ]; then
+  #typeset -a ANTIGEN_CHECK_FILES=(${ZDOTDIR:-~}/.zshrc $HOME/.local/share/zsh/antigen.zsh)
+  source "${ANTIGEN_ZSH_BIN}"
 
-# Oh-My-Zsh plugins
-antigen use oh-my-zsh
+  # Use Oh-My-Zsh plugins
+  antigen use oh-my-zsh
 
-antigen bundle git
-antigen bundle pip
-antigen bundle sudo
-antigen bundle python
-antigen bundle virtualenv
+  # Oh-My-Zsh Bundles
+  antigen bundle git
+  antigen bundle pip
+  antigen bundle sudo
+  antigen bundle python
+  antigen bundle virtualenv
+  antigen bundle command-not-found
 
-if _exists sk; then
-  antigen bundle casonadams/skim.zsh
-elif _exists fzf; then
-  antigen bundle fzf
-else
-  true
+  # External Bundles
+  antigen bundle chrissicool/zsh-256color
+  antigen bundle z-shell/F-Sy-H --branch=main
+  antigen bundle zsh-users/zsh-history-substring-search
+  antigen bundle zsh-users/zsh-autosuggestions
+  antigen bundle zsh-users/zsh-completions
+  antigen bundle Tarrasch/zsh-autoenv
+
+
+  # Conditional Bundles
+  if _exists sk; then
+    antigen bundle casonadams/skim.zsh
+  elif _exists fzf; then
+    antigen bundle fzf
+  else
+    true
+  fi
+
+  antigen apply
 fi
-
-
-antigen bundle command-not-found
-
-# External Plugins
-antigen bundle chrissicool/zsh-256color
-#antigen bundle fundor333/bofh --branch=main
-antigen bundle z-shell/F-Sy-H --branch=main
-antigen bundle zsh-users/zsh-history-substring-search
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle Tarrasch/zsh-autoenv
-
-antigen apply
-# END:: Antigen
 
 # -- { Shell Hooks } ----------------------------------------------------------------------- #
 
@@ -59,8 +60,8 @@ if [ x$ZSH_SELF_EXAPWD = xtrue ]; then
     emulate -L zsh
     # Only in response to a user-initiated `cd`, not indirectly (eg. via another function).
     if [ "$ZSH_EVAL_CONTEXT" = "toplevel:shfunc" ]; then
-      if $NERD_FONT_AVAILABLE; then command -v exa > /dev/null && exa --icons --only-dirs || ls; fi
-      if ! $NERD_FONT_AVAILABLE; then command -v exa > /dev/null && exa --only-dirs || ls; fi
+      if $SHELL_NERD_FONT_AVAILABLE; then command -v exa > /dev/null && exa --icons --only-dirs || ls; fi
+      if ! $SHELL_NERD_FONT_AVAILABLE; then command -v exa > /dev/null && exa --only-dirs || ls; fi
     fi
   }
   add-zsh-hook chpwd -auto-ls-after-cd
@@ -87,7 +88,7 @@ fi
 
 ### Replace ls with exa if available
 if _exists exa; then
-  if $NERD_FONT_AVAILABLE; then
+  if $SHELL_NERD_FONT_AVAILABLE; then
     alias ls='exa --icons'
     alias ll='exa -l --icons'
     alias la='exa -a --icons'

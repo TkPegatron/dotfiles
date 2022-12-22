@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+help() {
+    echo \
+"
+Home Configuration Manager
+  usage: hcm [action [item [value]]]
+  Actions:
+    - pull: Run a git pull on the worktree for the current branch
+    - install: Download required binaries for the configuration and stow
+    - set:
+        - nerd-fonts: set the variable determining nf presence
+"
+}
+_ensure_git_branch_local() {
+    "You are likely trying to alter configuration, this requires a new git branch"
+    exit 1
+}
+case "$1" in
+  "push")
+    echo "Please switch to '${HOME}/.dotfiles' and make changes manually..."
+    exit 1
+    ;;
+  "stat"|"status")
+    git --git-dir="${HOME}/.dotfiles/.git/" --work-tree="${HOME}/.dotfiles/" status
+    ;;
+  "pull")
+    git --git-dir="${HOME}/.dotfiles/.git/" --work-tree="${HOME}/.dotfiles/" pull
+    ;;
+  "install")
+    echo "---{ Installing Antigen for ZSH }---"
+    curl -L git.io/antigen > "${ANTIGEN_ZSH_BIN}"
+    echo "---{ work in progress }---"; exit 1
+    ;;
+  "set"|"add")
+    #_ensure_git_branch_local
+    case "$2" in
+      "nerd-fonts")
+        sed "s/SHELL_NERD_FONT_AVAILABLE=.*/SHELL_NERD_FONT_AVAILABLE=${3}/g" -i "${HOME}/.profile"
+        ;;
+      "gpg-default-key")
+        sed -e "/default-key/s/^#//" -e "s/default-key.*/default-key ${3}/g" -i "${GNUPGHOME}/gpg.conf"
+        ;;
+      "gpg-ssh-key")
+        echo "${3}" >> "${GNUPGHOME}/sshcontrol"
+        ;;
+      *)
+        help
+        ;;
+    esac
+    ;;
+  *)
+    help
+    ;;
+esac
