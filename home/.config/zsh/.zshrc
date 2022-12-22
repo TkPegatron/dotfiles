@@ -17,7 +17,7 @@ _exists() { (( $+commands[$1] )) }
 
 # - { Antigen } ---------------------------------------------------------------------------- #
 if [ -f "${ANTIGEN_ZSH_BIN}" ]; then
-  #typeset -a ANTIGEN_CHECK_FILES=(${ZDOTDIR:-~}/.zshrc $HOME/.local/share/zsh/antigen.zsh)
+  typeset -a ANTIGEN_CHECK_FILES=(${ZDOTDIR:-~}/.zshrc $ANTIGEN_ZSH_BIN)
   source "${ANTIGEN_ZSH_BIN}"
 
   # Use Oh-My-Zsh plugins
