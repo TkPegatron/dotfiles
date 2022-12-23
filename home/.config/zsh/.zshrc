@@ -15,42 +15,33 @@ setopt share_history                      # share history between shell processe
 # - { Helper Functions } ------------------------------------------------------------------- #
 _exists() { (( $+commands[$1] )) }
 
-# - { Antigen } ---------------------------------------------------------------------------- #
-if [ -f "${ANTIGEN_ZSH_BIN}" ]; then
-  #typeset -a ANTIGEN_CHECK_FILES=(${ZDOTDIR:-~}/.zshrc $HOME/.local/share/zsh/antigen.zsh)
-  source "${ANTIGEN_ZSH_BIN}"
+autoload -Uz compinit && compinit
 
-  # Use Oh-My-Zsh plugins
-  antigen use oh-my-zsh
+# - { Antidote } ---------------------------------------------------------------------------- #
+zstyle ':antidote:bundle' use-friendly-names 'yes'
+antidote_dir=${ZDOTDIR:-~}/antidote
+plugins_txt=${ZDOTDIR:-~}/zsh_plugins.txt
+static_file=${ZDOTDIR:-~}/zsh_plugins.zsh
 
-  # Oh-My-Zsh Bundles
-  antigen bundle git
-  antigen bundle pip
-  antigen bundle sudo
-  antigen bundle python
-  antigen bundle virtualenv
-  antigen bundle command-not-found
-
-  # External Bundles
-  antigen bundle chrissicool/zsh-256color
-  antigen bundle z-shell/F-Sy-H --branch=main
-  antigen bundle zsh-users/zsh-history-substring-search
-  antigen bundle zsh-users/zsh-autosuggestions
-  antigen bundle zsh-users/zsh-completions
-  antigen bundle Tarrasch/zsh-autoenv
-
-
-  # Conditional Bundles
-  if _exists sk; then
-    antigen bundle casonadams/skim.zsh
-  elif _exists fzf; then
-    antigen bundle fzf
-  else
-    true
-  fi
-
-  antigen apply
+# Clone antidote if necessary and generate a static plugin file.
+if [[ ! $static_file -nt $plugins_txt ]]; then
+  [[ -e $antidote_dir ]] ||
+    git clone --depth=1 https://github.com/mattmc3/antidote.git $antidote_dir
+  (
+    source $antidote_dir/antidote.zsh
+    [[ -e $plugins_txt ]] || touch $plugins_txt
+    antidote bundle <$plugins_txt >$static_file
+  )
 fi
+
+# Allow Antidote commands
+autoload -Uz $antidote_dir/functions/antidote
+
+# source the static plugins file
+source $static_file
+
+# cleanup
+unset antidote_dir plugins_txt static_file
 
 # -- { Shell Hooks } ----------------------------------------------------------------------- #
 

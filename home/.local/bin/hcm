@@ -27,8 +27,6 @@ case "$1" in
     git --git-dir="${HOME}/.dotfiles/.git/" --work-tree="${HOME}/.dotfiles/" pull
     ;;
   "install")
-    echo "---{ Installing Antigen for ZSH }---"
-    curl -L git.io/antigen > "${ANTIGEN_ZSH_BIN}"
     echo "---{ work in progress }---"; exit 1
     ;;
   "set"|"add")
