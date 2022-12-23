@@ -1,5 +1,4 @@
 . "$HOME/.profile"
-. "${XDG_CONFIG_HOME}/hcm/main.sh"
 
 # Only source this once
 if [[ -z "$__ZSH_SESS_VARS_SOURCED" ]]; then

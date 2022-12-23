@@ -55,8 +55,7 @@ case "$1" in
         help
         ;;
     esac
-    echo "---{ Re-sourcing variables from ${XDG_CONFIG_HOME}/hcm/main.sh"
-    source "${XDG_CONFIG_HOME}/hcm/main.sh"
+    echo "---{ You may need to restart your shell for changes to take effect"
     ;;
   *)
     help
