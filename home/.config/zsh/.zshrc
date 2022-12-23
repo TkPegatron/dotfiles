@@ -15,6 +15,7 @@ setopt share_history                      # share history between shell processe
 # - { Helper Functions } ------------------------------------------------------------------- #
 _exists() { (( $+commands[$1] )) }
 
+autoload -Uz compinit && compinit
 
 # - { Antidote } ---------------------------------------------------------------------------- #
 zstyle ':antidote:bundle' use-friendly-names 'yes'
