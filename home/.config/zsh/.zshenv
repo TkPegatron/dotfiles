@@ -1,4 +1,5 @@
 . "$HOME/.profile"
+. "${XDG_CONFIG_HOME}/hcm/main.sh"
 
 # Only source this once
 if [[ -z "$__ZSH_SESS_VARS_SOURCED" ]]; then
@@ -6,9 +7,6 @@ if [[ -z "$__ZSH_SESS_VARS_SOURCED" ]]; then
 fi
 
 export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
-
-# Antigen Vars
-export ANTIGEN_ZSH_BIN="${HOME}/.local/bin/antigen.zsh"
 
 ZSH_SELF_EXAPWD=true
 

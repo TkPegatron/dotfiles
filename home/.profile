@@ -29,9 +29,10 @@ export GNUPGHOME="$HOME/.config/gnupg"
 export PAGER="less -FirSwX"
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 export TMUX_TMPDIR="${XDG_RUNTIME_DIR:-"/run/user/\$(id -u)"}"
-
 export MANPAGER="sh -c 'col -bx | $HOME/.local/bin/bat -l man -p'"
 export MANROFFOPT="-c"
+
+export SKIM_DEFAULT_COMMAND="fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
 
 # Default editor to vi-improved
 export EDITOR="vim"
@@ -52,10 +53,11 @@ else
     export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/bf-singleline.toml"
 fi
 
-export SKIM_DEFAULT_COMMAND="fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
+# The GnuPG Agent man pages say to add these
 
-# Use GPG-Agent for SSH
 export GPG_TTY=$(tty)
-if [ -z "$SSH_AUTH_SOCK" ]; then
+
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
     export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 fi

@@ -50,6 +50,9 @@ stow --verbose --restow \
   home
 
 echo "#----{ Creating user gpg trustdb and keyring  }----#"
+gpg-agent --daemon \
+  --pinentry-program /usr/bin/pinentry \
+  --disable-scdaemon
 gpg --list-keys
 
 exec zsh

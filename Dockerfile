@@ -27,6 +27,7 @@ RUN \
       fping \
       git \
       gpg \
+      gpg-agent \
       iftop \
       iperf \
       iperf3 \

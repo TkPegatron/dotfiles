@@ -27,24 +27,36 @@ case "$1" in
     git --git-dir="${HOME}/.dotfiles/.git/" --work-tree="${HOME}/.dotfiles/" pull
     ;;
   "install")
+    echo "---{ Correcting ownership of GnuPG home directory"
+    mkdir -pv ${GNUPGHOME} && chmod 700 ${GNUPGHOME} # Ensure correct permissions
+    find ${GNUPGHOME} -type f -exec chmod 600 {} \;
+    find ${GNUPGHOME} -type d -exec chmod 700 {} \;
     echo "---{ work in progress }---"; exit 1
     ;;
   "set"|"add")
     #_ensure_git_branch_local
     case "$2" in
       "nerd-fonts")
-        sed "s/SHELL_NERD_FONT_AVAILABLE=.*/SHELL_NERD_FONT_AVAILABLE=${3}/g" -i "${HOME}/.profile"
+        echo "---{ Changing value of SHELL_NERD_FONT_AVAILABLE to ${3}"
+        sed -i "${HOME}/.profile \
+          -e "s/SHELL_NERD_FONT_AVAILABLE=.*/SHELL_NERD_FONT_AVAILABLE=${3}/g"
         ;;
       "gpg-default-key")
-        sed -e "/default-key/s/^#//" -e "s/default-key.*/default-key ${3}/g" -i "${GNUPGHOME}/gpg.conf"
+        echo "---{ Setting default pgp key to ${3}"
+        sed -i "${GNUPGHOME}/gpg.conf" \
+          -e "/default-key/s/^#//" \
+          -e "s/default-key.*/default-key ${3}/g"
         ;;
       "gpg-ssh-key")
+        echo "---{ Adding grip to ${GNUPGHOME}/sshcontrol"
         echo "${3}" >> "${GNUPGHOME}/sshcontrol"
         ;;
       *)
         help
         ;;
     esac
+    echo "---{ Re-sourcing variables from ${XDG_CONFIG_HOME}/hcm/main.sh"
+    source "${XDG_CONFIG_HOME}/hcm/main.sh"
     ;;
   *)
     help

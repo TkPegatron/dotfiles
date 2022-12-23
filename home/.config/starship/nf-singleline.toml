@@ -1,5 +1,5 @@
 format = """
-[{](blue) [λ](bold bright-yellow) $username$hostname:$directory$git_branch$git_state$git_status[}={](blue)$character
+[{](blue) ${custom.system_icons} $username$hostname:$directory$git_branch$git_state$git_status[}={](blue)$character
 """
 
 add_newline = false
@@ -28,6 +28,16 @@ read_only = " "
 truncation_symbol = "…/"
 truncate_to_repo = false
 truncation_length = 100
+
+[custom.system_icons]
+description = "Show system icons"
+command     = 'echo $STARSHIP_OS_ICON'
+#command     = '([ $(uname -s) == "Darwin" ] && echo ) || ([ $(uname -s) == "Linux" ] && echo )'
+format      = "[$output]($style) "
+style       = "bold bright-yellow"
+shell       = ["bash", "--noprofile", "--norc"]
+when        = "true"
+
 
 [terraform]
 format = "[$symbol$workspace]($style) "
