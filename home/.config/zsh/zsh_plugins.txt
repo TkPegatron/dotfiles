@@ -11,8 +11,10 @@ zsh-users/zsh-history-substring-search
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 
-Tarrasch/zsh-autoenv
+MichaelAquilina/zsh-you-should-use
 chrissicool/zsh-256color
+le0me55i/zsh-systemd
+Tarrasch/zsh-autoenv
 casonadams/skim.zsh
-
+zpm-zsh/colorize
 z-shell/F-Sy-H

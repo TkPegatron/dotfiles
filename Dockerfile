@@ -22,6 +22,7 @@ RUN \
       direnv \
       drill \
       ethtool \
+      exa \
       file \
       fping \
       git \
