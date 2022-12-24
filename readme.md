@@ -33,3 +33,12 @@ A little internal shell script to modify the running shell environment in a semi
 - [exa](https://github.com/ogham/exa), replacement for ls(1).
 - [zellij](https://github.com/zellij-org/zellij/), A rust terminal multiplexer.
 - [tealdeer](https://github.com/dbrgn/tealdeer), A very fast implementation of tldr in Rust
+
+### Testing
+
+```shell
+podman build -t homeshell .
+podman run --userns=keep-id -it -v ~/Code/static-home/home/:/home/elliana homeshell zsh
+```
+
+git clone git@github.com:TkPegatron/dotfiles.git --branch devel

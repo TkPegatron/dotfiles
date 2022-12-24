@@ -42,6 +42,7 @@ RUN \
       liboping \
       logrotate \
       mtr \
+      ncurses \
       neovim \
       net-snmp-tools \
       netcat-openbsd \

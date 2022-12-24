@@ -22,7 +22,7 @@ I am using the following options:
 
 `gpg -K --with-keygrip`
 
-## Creating sub keys
+## Using gpg-agent as an ssh-agent
 
 `gpg --edit-key "${KEY_ID}"`
 
@@ -56,8 +56,50 @@ gpg> passwd
 gpg> save
 ```
 
+## Exporting Keys
+
+### Public Key
+
+This command will export an ascii armored version of the public key:
+
+`gpg --output public.pgp --armor --export username@email`
+
+### Private Key
+
+This command will export an ascii armored version of the secret key:
+
+`gpg --output private.pgp --armor --export-secret-key username@email`
+
+If you also want to include the key(s), user attributes, signatures (including local signatures), and ownertrust values. Everything required to completely restore the key(s) and trust database as they currently exist in your gnupg directory.
+
+`gpg --output private.pgp --armor --export-secret-keys --export-options export-backup user@email`
+
+## Additional Notes
+
+If this key is important to you, I recommend printing out the key on paper using [paperkey](https://www.jabberwocky.com/software/paperkey/).  And placing the paper key in a fireproof/waterproof safe.
+
+In general, it's not advisable to post personal public keys to key servers.  There is no method of removing a key once it's posted and there is no method of ensuring that the key on the server was placed there by the supposed owner of the key.
+
+It is much better to place your public key on a website that you own or control.  Some people recommend [keybase.io](https://keybase.io/) for distribution.  However, that method tracks participation in various social and technical communities which may not be desirable for some use cases.
+
+For the technically adept, I personally recommend trying out the [webkey](https://www.gnupg.org/blog/20160830-web-key-service.html) domain level key discovery service.
+
 ## Troubleshooting
 
 In testing various configuration settings I have likely created a variety of race conditions.
 
 At one point I got the error that gpg-agent could not find a file. I purged all non-configuration files from `${GNUPGHOME}` and ran `pkill gpg-agent; strace -o /tmp/gpg-agent.trace gpg-agent --daemon; gpg -K --with-keygrip` which gave me the files I needed.
+
+If the agent is refusing ssh: `gpg-agent --daemon`
+
+
+you can test with: `ssh -vT git@github.com`
+
+```bash
+gpg --import elliana-perry.gpg-private.asc
+
+cat <<EOF | tee -a "${GNUPGHOME}/sshcontrol"
+ED2EDC2C8563ABB9404C5877DB56182523676CD1
+420F1135CC6DA2519C39DFB6C2A05B70B83FE16F
+EOF
+```
