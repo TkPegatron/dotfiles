@@ -38,7 +38,7 @@ case "$1" in
     case "$2" in
       "nerd-fonts")
         echo "---{ Changing value of SHELL_NERD_FONT_AVAILABLE to ${3}"
-        sed -i "${HOME}/.profile \
+        sed -i "${HOME}/.profile" \
           -e "s/SHELL_NERD_FONT_AVAILABLE=.*/SHELL_NERD_FONT_AVAILABLE=${3}/g"
         ;;
       "gpg-default-key")
