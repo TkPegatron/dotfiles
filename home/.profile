@@ -29,7 +29,7 @@ export GNUPGHOME="$HOME/.config/gnupg"
 export PAGER="less -FirSwX"
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgreprc"
 export TMUX_TMPDIR="${XDG_RUNTIME_DIR:-"/run/user/\$(id -u)"}"
-export MANPAGER="sh -c 'col -bx | $HOME/.local/bin/bat -l man -p'"
+export MANPAGER="sh -c 'col -bx | $(which bat) -l man -p'"
 export MANROFFOPT="-c"
 
 export SKIM_DEFAULT_COMMAND="fd --type f || git ls-tree -r --name-only HEAD || rg --files || find ."
