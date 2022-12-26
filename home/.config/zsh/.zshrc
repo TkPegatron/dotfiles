@@ -43,6 +43,10 @@ source $static_file
 # cleanup
 unset antidote_dir plugins_txt static_file
 
+# -- { Shell Completions } ----------------------------------------------------------------- #
+
+if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi
+
 # -- { Shell Hooks } ----------------------------------------------------------------------- #
 
 if [ x$ZSH_SELF_EXAPWD = xtrue ]; then
