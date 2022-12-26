@@ -5,3 +5,5 @@ home/.config/gnupg/*
 !home/.config/gnupg/gpg.conf
 home/.bash_history
 home/.config/zsh/.zsh_history
+home/.config/zsh/.zcompdump
+home/.config/zsh/zsh_plugins.zsh

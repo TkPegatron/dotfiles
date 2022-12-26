@@ -11,14 +11,16 @@ setopt pushd_ignore_dups                  # don't push multiple copies of same d
 setopt auto_param_slash                   # tab completing directory appends a slash
 setopt share_history                      # share history between shell processes
 
+# - { ZStyle } ----------------------------------------------------------------------------- #
+zstyle ':antidote:bundle' use-friendly-names 'yes'
+zstyle ':zsh-utils:plugins:completion' use-xdg-basedirs "true"
 
 # - { Helper Functions } ------------------------------------------------------------------- #
 _exists() { (( $+commands[$1] )) }
 
 autoload -Uz compinit && compinit
 
-# - { Antidote } ---------------------------------------------------------------------------- #
-zstyle ':antidote:bundle' use-friendly-names 'yes'
+# - { Antidote } --------------------------------------------------------------------------- #
 antidote_dir=${ZDOTDIR:-~}/antidote
 plugins_txt=${ZDOTDIR:-~}/zsh_plugins.txt
 static_file=${ZDOTDIR:-~}/zsh_plugins.zsh
