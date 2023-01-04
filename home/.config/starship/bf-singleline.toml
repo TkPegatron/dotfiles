@@ -1,0 +1,166 @@
+format = """
+[{](blue) [λ](bold bright-yellow) $username$hostname:$directory$git_branch$git_state$git_status[}={](blue)$character
+"""
+
+add_newline = false
+
+[character]
+success_symbol = "[:](bold green)"
+error_symbol = "[:](bold red)"
+vimcmd_symbol = "[<](bold green)"
+
+[fill]
+symbol = " "
+
+[username]
+format = "[$user]($style)[@](blue)"
+style_root = "bold red"
+style_user = "bold yellow"
+show_always = true
+disabled = false
+
+[hostname]
+format = "[$hostname]($style)"
+ssh_only = false
+
+[directory]
+read_only = " ro"
+truncation_symbol = "…/"
+truncate_to_repo = false
+truncation_length = 100
+
+[terraform]
+format = "[$symbol$workspace]($style) "
+
+[git_branch]
+symbol = "git: "
+format = "[$symbol$branch]($style) "
+
+[git_commit]
+tag_symbol = " tag "
+
+[git_status]
+ahead = ">"
+behind = "<"
+diverged = "<>"
+renamed = "r"
+deleted = "x"
+
+[aws]
+symbol = "aws "
+
+[bun]
+symbol = "bun "
+
+[c]
+symbol = "C "
+
+[cobol]
+symbol = "cobol "
+
+[conda]
+symbol = "conda "
+
+[crystal]
+symbol = "cr "
+
+[cmake]
+symbol = "cmake "
+
+[daml]
+symbol = "daml "
+
+[dart]
+symbol = "dart "
+
+[deno]
+symbol = "deno "
+
+[dotnet]
+symbol = ".NET "
+
+[docker_context]
+symbol = "docker "
+
+[python]
+symbol = "py: "
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[rust]
+symbol = "rs: "
+format = "[$symbol($version )]($style)"
+
+[elixir]
+symbol = "exs "
+
+[elm]
+symbol = "elm "
+
+[golang]
+symbol = "go "
+
+[hg_branch]
+symbol = "hg "
+
+[java]
+symbol = "java "
+
+[julia]
+symbol = "jl "
+
+[kotlin]
+symbol = "kt "
+
+[lua]
+symbol = "lua "
+
+[nodejs]
+symbol = "nodejs "
+
+[memory_usage]
+symbol = "memory "
+
+[nim]
+symbol = "nim "
+
+[nix_shell]
+symbol = "nix "
+
+[ocaml]
+symbol = "ml "
+
+[package]
+symbol = "pkg "
+
+[perl]
+symbol = "pl "
+
+[php]
+symbol = "php "
+
+[pulumi]
+symbol = "pulumi "
+
+[purescript]
+symbol = "purs "
+
+[raku]
+symbol = "raku "
+
+[ruby]
+symbol = "rb "
+
+[scala]
+symbol = "scala "
+
+[spack]
+symbol = "spack "
+
+[sudo]
+symbol = "sudo "
+
+[swift]
+symbol = "swift "
+
+[zig]
+symbol = "zig "

@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+help() {
+    echo \
+"
+Home Configuration Manager
+  usage: hcm [action [item [value]]]
+  Actions:
+    - pull: Run a git pull on the worktree for the current branch
+    - install: Download required binaries for the configuration and stow
+    - set:
+        - nerd-fonts: set the variable determining nf presence
+"
+}
+_ensure_git_branch_local() {
+    "You are likely trying to alter configuration, this requires a new git branch"
+    exit 1
+}
+case "$1" in
+  "push")
+    echo "Please switch to '${HOME}/.dotfiles' and make changes manually..."
+    exit 1
+    ;;
+  "stat"|"status")
+    git --git-dir="${HOME}/.dotfiles/.git/" --work-tree="${HOME}/.dotfiles/" status
+    ;;
+  "pull")
+    git --git-dir="${HOME}/.dotfiles/.git/" --work-tree="${HOME}/.dotfiles/" pull
+    ;;
+  "install")
+    echo "---{ Correcting ownership of GnuPG home directory"
+    mkdir -pv ${GNUPGHOME} && chmod 700 ${GNUPGHOME} # Ensure correct permissions
+    find ${GNUPGHOME} -type f -exec chmod 600 {} \;
+    find ${GNUPGHOME} -type d -exec chmod 700 {} \;
+    echo "---{ work in progress }---"; exit 1
+    ;;
+  "set"|"add")
+    #_ensure_git_branch_local
+    case "$2" in
+      "nerd-fonts")
+        echo "---{ Changing value of SHELL_NERD_FONT_AVAILABLE to ${3}"
+        sed -i "${HOME}/.profile" \
+          -e "s/SHELL_NERD_FONT_AVAILABLE=.*/SHELL_NERD_FONT_AVAILABLE=${3}/g"
+        ;;
+      "gpg-default-key")
+        echo "---{ Setting default pgp key to ${3}"
+        sed -i "${GNUPGHOME}/gpg.conf" \
+          -e "/default-key/s/^#//" \
+          -e "s/default-key.*/default-key ${3}/g"
+        ;;
+      "gpg-ssh-key")
+        echo "---{ Adding grip to ${GNUPGHOME}/sshcontrol"
+        echo "${3}" >> "${GNUPGHOME}/sshcontrol"
+        ;;
+      *)
+        help
+        ;;
+    esac
+    echo "---{ You may need to restart your shell for changes to take effect"
+    ;;
+  *)
+    help
+    ;;
+esac

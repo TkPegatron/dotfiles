@@ -1,0 +1,22 @@
+[user]
+	email = elliana.perry@gmail.com
+	name = Elliana Perry
+	#signingkey =
+[init]
+  defaultBranch = main
+#[commit]
+#  gpgsign = true
+[alias]
+  stat = status
+  st = status
+[core]
+  editor = vi
+  excludesfile = ~/.gitignore
+  pager = delta
+[color]
+  ui = true
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  line-numbers = true

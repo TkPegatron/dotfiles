@@ -1,0 +1,185 @@
+format = """
+[{](blue) ${custom.system_icons} $username$hostname:$directory$git_branch$git_state$git_status[}={](blue)$character
+"""
+
+add_newline = false
+
+[character]
+success_symbol = "[:](bold green)"
+error_symbol = "[:](bold red)"
+vimcmd_symbol = "[<](bold green)"
+
+[fill]
+symbol = " "
+
+[username]
+format = "[$user]($style)[@](blue)"
+style_root = "bold red"
+style_user = "bold yellow"
+show_always = true
+disabled = false
+
+[hostname]
+format = "[$hostname]($style)"
+ssh_only = false
+
+[directory]
+read_only = " "
+truncation_symbol = "…/"
+truncate_to_repo = false
+truncation_length = 100
+
+[custom.system_icons]
+description = "Show system icons"
+command     = 'echo $STARSHIP_OS_ICON'
+#command     = '([ $(uname -s) == "Darwin" ] && echo ) || ([ $(uname -s) == "Linux" ] && echo )'
+format      = "[$output]($style)"
+style       = "bold bright-yellow"
+shell       = ["bash", "--noprofile", "--norc"]
+when        = "true"
+
+
+[terraform]
+format = "[$symbol$workspace]($style) "
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch]($style) "
+
+[git_commit]
+tag_symbol = " tag "
+
+[git_status]
+ahead = ">"
+behind = "<"
+diverged = "<>"
+renamed = "r"
+deleted = "x"
+
+[aws]
+symbol = "  "
+
+[bun]
+symbol = "bun "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[cobol]
+symbol = "cobol "
+
+[conda]
+symbol = " "
+
+[crystal]
+symbol = "cr "
+
+[cmake]
+symbol = "cmake "
+
+[daml]
+symbol = "daml "
+
+[dart]
+symbol = " "
+
+[deno]
+symbol = "deno "
+
+[dotnet]
+symbol = ".NET "
+
+[docker_context]
+symbol = " "
+
+[python]
+symbol = " "
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[kotlin]
+symbol = "kt "
+
+[lua]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[ocaml]
+symbol = "ml "
+
+[package]
+symbol = " "
+
+[perl]
+symbol = "pl "
+
+[php]
+symbol = "php "
+
+[pulumi]
+symbol = "pulumi "
+
+[purescript]
+symbol = "purs "
+
+[raku]
+symbol = "raku "
+
+[rlang]
+symbol = "ﳒ "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+format = "[$symbol($version )]($style)"
+
+[scala]
+symbol = " "
+
+[spack]
+symbol = "🅢 "
+
+[sudo]
+symbol = "sudo "
+
+[swift]
+symbol = "swift "
+
+[zig]
+symbol = "zig "
