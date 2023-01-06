@@ -44,11 +44,11 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-export SHELL_NERD_FONT_AVAILABLE=false
+export SHELL_NERD_FONT_AVAILABLE=true
 
 if $SHELL_NERD_FONT_AVAILABLE; then
-    export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/nf-legion.toml"
-    export STARSHIP_OS_ICON="⚙️"
+    export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/nf-singleline.toml"
+    export STARSHIP_OS_ICON=""
 else
     export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/bf-singleline.toml"
 fi

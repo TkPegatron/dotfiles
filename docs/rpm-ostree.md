@@ -28,7 +28,7 @@ flatpak install \
 
 
 ```shell
-sudo nano /etc/rpm-ostreed.conf
+sudo vi /etc/rpm-ostreed.conf
 rpm-ostree reload
 systemctl enable rpm-ostreed-automatic.timer --now
 
@@ -52,3 +52,35 @@ rpm-ostree install \
 flatpak list --columns application > /run/media/elliana/ISOHAULER/flatpak_installed.txt
 
 curl -sS https://starship.rs/install.sh | sh
+
+
+
+
+In one go, this will layer all of the packages I like to have in my running-system:
+
+```sh
+# Enable RPM Fusion repositories
+rpm-ostree install rpmfusion-free-release rpmfusion-nonfree-release
+# Enable the Vivaldi repository
+sudo curl -so /etc/yum.repos.d/vivaldi-fedora.repo https://repo.vivaldi.com/archive/vivaldi-fedora.repo
+# Userspace applications
+rpm-ostree install \
+  bat zsh exa code direnv skim \
+  kffmpegthumbnailer kubernetes-client latte-dock \
+  yt-dlp syncthing steam-devices stow vivaldi-stable \
+  yakuake
+
+# Baremetal Optimizations
+rpm-ostree override remove \
+  open-vm-tools open-vm-tools-desktop qemu-guest-agent \
+  spice-vdagent spice-webdavd virtualbox-guest-additions
+```
+
+OSTREEd config
+
+```ini
+[Daemon]
+AutomaticUpdatePolicy=check
+```
+
+systemctl enable rpm-ostreed-automatic.timer --now
