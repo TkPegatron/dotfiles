@@ -1,26 +1,11 @@
 # Elliana's HomeConfig
 
-**Installation**: This repository should be installed as a bare git repository. There is a helper alias that will wrap git to use this bare repo to interact with upstream.
+This repository built around `gnu/stow` and is intended to be dynamic enough to avoid workflow breaks from missing dependencies.
+The project is intended to be suitable for any *nix system with `zsh` installed. Be it local, over ssh, or a container. 
 
 ## Software preferences
 
-### Terminal Emulator
-
-- WM: Alacritty hands down.
-- KDE: Konsole.
-- GNOME: Elementary Terminal.
-
-### File Manager
-
-- WM/Terminal: Ranger
-- KDE: Dolphin
-- GNOME: Nemo
-
-### hccm script
-
-A little internal shell script to modify the running shell environment in a semi-sane way.
-
-### Terminal applications and shell utils.
+### Reccomended shell utils
 
 - Glances
 - [duf](https://github.com/muesli/duf) a modern disk-usage utility written in go.
@@ -33,12 +18,3 @@ A little internal shell script to modify the running shell environment in a semi
 - [exa](https://github.com/ogham/exa), replacement for ls(1).
 - [zellij](https://github.com/zellij-org/zellij/), A rust terminal multiplexer.
 - [tealdeer](https://github.com/dbrgn/tealdeer), A very fast implementation of tldr in Rust
-
-### Testing
-
-```shell
-podman build -t homeshell .
-podman run --userns=keep-id -it -v ~/Code/static-home/home/:/home/elliana homeshell zsh
-```
-
-git clone git@github.com:TkPegatron/dotfiles.git --branch devel

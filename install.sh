@@ -10,7 +10,7 @@ else
 fi
 # Stow dotfiles if stow is available
 if which stow 2>/dev/null; then
-  stow --dir="${DOTFILES}/" --target="${HOME}/" --restow home
+  stow --dir="${DOTFILES}/" --target="${HOME}/" --restow --ignore=".gitconfig" home
 else
   echo "GNU/Stow was not found in path or is otherwise not available"
   exit 1
