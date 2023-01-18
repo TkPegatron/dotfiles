@@ -10,12 +10,17 @@ else
 fi
 # Stow dotfiles if stow is available
 if which stow 2>/dev/null; then
-  stow --dir="${DOTFILES}/" --target="${HOME}/" --restow --verbose --ignore=".gitconfig" home
+  if [[ "$REMOTE_CONTAINERS" ]]; then
+    #? For VSCode Remote Containers
+    # The extension copies local gnupg resources into the container during startup,
+    #   this is a *shim* to link them into the inner ${GNUPGHOME}
+    stow --dir="${HOME}/.gnupg/" --target="${HOME}/.config/gnupg" --restow --verbose .
+    # The extension also copies the local .gitconfig during startup
+    stow --dir="${DOTFILES}/" --target="${HOME}/" --restow --verbose --ignore=".gitconfig" home 
+  else
+    stow --dir="${DOTFILES}/" --target="${HOME}/" --restow --verbose home
+  fi
 else
   echo "GNU/Stow was not found in path or is otherwise not available"
   exit 1
-fi
-if [[ "${TERM_PROGRAM}" == 'vscode' ]] && [[ "$REMOTE_CONTAINERS" ]]; then
-  echo "vscode detected, linking gpg"
-  stow --dir="${HOME}/.gnupg/" --target="${HOME}/.config/gnupg" --restow --verbose .
 fi
