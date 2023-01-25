@@ -48,6 +48,8 @@ unset antidote_dir plugins_txt static_file
 # -- { Shell Completions } ----------------------------------------------------------------- #
 
 if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi
+if [ $commands[flux] ]; then source <(flux completion zsh); fi
+if [ $commands[helm] ]; then source <(helm completion zsh); fi
 
 # -- { Shell Hooks } ----------------------------------------------------------------------- #
 
