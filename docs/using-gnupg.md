@@ -103,3 +103,14 @@ ED2EDC2C8563ABB9404C5877DB56182523676CD1
 420F1135CC6DA2519C39DFB6C2A05B70B83FE16F
 EOF
 ```
+
+### GNOME
+
+In gnome, the gnome-keyring will set the SSH_AUTH_SOCK variable on login, this breaks SSH for my configuration...
+
+I found a quick fix for it though. Simply mask the autostart file for it like so...
+
+```sh
+cp /etc/xdg/autostart/gnome-keyring-ssh.desktop ~/.config/autostart
+echo "Hidden=true" >> ~/.config/autostart/gnome-keyring-ssh.desktop
+```
