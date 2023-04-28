@@ -1,4 +1,18 @@
 #!/usr/bin/env bash
+# Install favored shell utilities
+if [[ $RHEL_DEPS == true ]]; then
+  #? This hasn't been tested fully
+  sudo dnf install epel-release
+  sudo dnf copr enable atim/starship
+  sudo dnf install -y \
+      starship \
+      fd-find \
+      bat \
+      exa
+  wget https://github.com/lotabout/skim/releases/download/v0.9.4/skim-v0.9.4-x86_64-unknown-linux-musl.tar.gz \
+      -O /tmp/skim.tar.gz
+  sudo tar -xf /tmp/skim.tar.gz -C /usr/bin/
+fi
 # Try to detect where the ditfiles have been cloned to
 if [[ -d "${HOME}/.dotfiles" ]]; then
   DOTFILES="${HOME}/.dotfiles"
