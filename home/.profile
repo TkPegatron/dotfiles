@@ -44,7 +44,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-export SHELL_NERD_FONT_AVAILABLE=true
+export SHELL_NERD_FONT_AVAILABLE=false
 
 if $SHELL_NERD_FONT_AVAILABLE; then
     export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/nf-singleline.toml"
