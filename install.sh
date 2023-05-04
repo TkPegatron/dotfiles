@@ -38,3 +38,6 @@ else
   echo "GNU/Stow was not found in path or is otherwise not available"
   exit 1
 fi
+
+
+# Footed to commit permissions change
