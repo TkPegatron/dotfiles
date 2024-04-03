@@ -1,7 +1,7 @@
 # Elliana's HomeConfig
 
 This repository built around `gnu/stow` and is intended to be dynamic enough to avoid workflow breaks from missing dependencies.
-The project is intended to be suitable for any *nix system with `zsh` installed. Be it local, over ssh, or a container. 
+The project is intended to be suitable for any *nix system with `zsh` installed. Be it local, over ssh, or a container.
 
 ## Software preferences
 
@@ -18,3 +18,6 @@ The project is intended to be suitable for any *nix system with `zsh` installed.
 - [exa](https://github.com/ogham/exa), replacement for ls(1).
 - [zellij](https://github.com/zellij-org/zellij/), A rust terminal multiplexer.
 - [tealdeer](https://github.com/dbrgn/tealdeer), A very fast implementation of tldr in Rust
+
+
+please ignore
